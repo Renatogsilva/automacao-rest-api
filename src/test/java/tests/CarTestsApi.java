@@ -22,6 +22,7 @@ public class CarTestsApi {
     public static void setup() {
         LoginTestsApi loginTestsApi = new LoginTestsApi();
         loginTestsApi.testLogin();
+
     }
 
     @Test
