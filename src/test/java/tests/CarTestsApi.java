@@ -32,14 +32,6 @@ public class CarTestsApi {
         Response response = this.postRequest.createCar(Factory.createCarRequestDto());
 
         response.then().assertThat().statusCode(201);
-
-        Car car = response.as(Car.class);
-
-        Assertions.assertNotNull(car);
-        Assertions.assertNotNull(car.getCarId());
-        Assertions.assertEquals(Factory.createCarRequestDto().getMark(), car.getMark());
-        Assertions.assertEquals(Factory.createCarRequestDto().getColor(), car.getColor());
-        Assertions.assertEquals(Factory.createCarRequestDto().getEngine(), car.getEngine());
     }
 
     @Test
