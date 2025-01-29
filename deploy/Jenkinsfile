@@ -6,8 +6,7 @@ pipeline {
     }
 
     environment {
-        MAVEN_OPTS = "-Dmaven.surefire.debug=true"
-        // Força o Maven a mostrar detalhes do que está acontecendo nos testes
+        MAVEN_OPTS = "-Dslf4j.simpleLogger.defaultLogLevel=error" // Suprime os logs do SLF4J
     }
 
     stages {
@@ -18,7 +17,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'mvn test -Dmaven.surefire.failIfNoTests=false'
+                sh 'mvn test -Dmaven.surefire.logging.level=ERROR'
             }
         }
         stage('Reporting Test') {
