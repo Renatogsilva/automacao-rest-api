@@ -13,9 +13,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-                    sh 'mvn test'
-                }
+                sh 'mvn test'
             }
         }
         stage('Reporting Test') {
@@ -25,6 +23,18 @@ pipeline {
             post {
                 always {
                     allure includeProperties: false, results: [[path: 'allure-results']]
+                }
+            }
+        }
+    }
+    post {
+        always {
+            // Aqui, verifica o status do build diretamente e define o status como SUCCESS ou UNSTABLE
+            script {
+                if (currentBuild.result == 'FAILURE' || currentBuild.result == 'UNSTABLE') {
+                    currentBuild.result = 'UNSTABLE'  // Garantir que o pipeline não seja sucesso se algo falhou
+                } else {
+                    currentBuild.result = 'SUCCESS'  // Define como sucesso se tudo correr bem
                 }
             }
         }
