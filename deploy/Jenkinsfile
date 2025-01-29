@@ -13,7 +13,9 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                bat 'mvn test'
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    bat 'mvn test'
+                }
             }
         }
         stage('Reporting Test') {
