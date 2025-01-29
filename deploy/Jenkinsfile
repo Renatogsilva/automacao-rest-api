@@ -27,16 +27,16 @@ pipeline {
             }
         }
     }
-//    post {
-//        always {
-//            // Aqui, verifica o status do build diretamente e define o status como SUCCESS ou UNSTABLE
-//            script {
-//                if (currentBuild.result == 'FAILURE' || currentBuild.result == 'UNSTABLE') {
-//                    currentBuild.result = 'UNSTABLE'  // Garantir que o pipeline não seja sucesso se algo falhou
-//                } else {
-//                    currentBuild.result = 'SUCCESS'  // Define como sucesso se tudo correr bem
-//                }
-//            }
-//        }
-//    }
+    post {
+        always {
+            // Aqui, verifica o status do build diretamente e define o status como SUCCESS ou UNSTABLE
+            script {
+                if (currentBuild.result == 'FAILURE' || currentBuild.result == 'UNSTABLE') {
+                    currentBuild.result = 'UNSTABLE'  // Garantir que o pipeline não seja sucesso se algo falhou
+                } else {
+                    currentBuild.result = 'SUCCESS'  // Define como sucesso se tudo correr bem
+                }
+            }
+        }
+    }
 }
