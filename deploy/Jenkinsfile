@@ -8,17 +8,17 @@ pipeline {
     stages {
         stage('Build Project') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                bat 'mvn clean install -DskipTests'
             }
         }
         stage('Run Tests') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         stage('Reporting Test') {
             steps {
-                sh 'echo GENERATE REPORT...'
+                bat 'echo GENERATE REPORT...'
             }
             post {
                 always {
