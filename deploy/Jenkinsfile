@@ -12,8 +12,10 @@ pipeline {
             }
         }
         stage('Run Tests') {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                sh 'mvn test'
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'mvn test'
+                }
             }
         }
         stage('Reporting Test') {
@@ -27,14 +29,15 @@ pipeline {
             }
         }
     }
+
     post {
         always {
-            // Aqui, verifica o status do build diretamente e define o status como SUCCESS ou UNSTABLE
             script {
+                // Verificando o status do build após a execução dos testes
                 if (currentBuild.result == 'FAILURE' || currentBuild.result == 'UNSTABLE') {
-                    currentBuild.result = 'UNSTABLE'  // Garantir que o pipeline não seja sucesso se algo falhou
+                    currentBuild.result = 'UNSTABLE' // Garantindo que se houver erro ele seja marcado como UNSTABLE
                 } else {
-                    currentBuild.result = 'SUCCESS'  // Define como sucesso se tudo correr bem
+                    currentBuild.result = 'SUCCESS' // Garantindo que se tudo estiver certo, o build será SUCCESS
                 }
             }
         }
