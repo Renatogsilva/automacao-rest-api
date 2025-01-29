@@ -13,7 +13,9 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'mvn test'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    sh 'mvn test'
+                }
             }
         }
         stage('Reporting Test') {
